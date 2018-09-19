@@ -3,9 +3,21 @@ const ui = new UI;
 
 const searchUser = document.getElementById('searchUser');
 
-searchUser.addEventListener('keyup', (e) => {
-  const userText = e.target.value;
+let user = document.getElementById('searchUser').value;
 
+github.getUser(user)
+  .then(data => {
+      ui.showProfile(data.profile);
+      ui.showRepos(data.repos);
+    }
+  );
+
+console.log(user);
+
+
+searchUser.addEventListener('keyup', (e) => {
+  ui.clearAlert();
+  const userText = e.target.value;
   if (userText !== ''){
     github.getUser(userText)
       .then(data => {
